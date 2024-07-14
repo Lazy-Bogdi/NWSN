@@ -16,8 +16,9 @@ final class JWTCreatedListener
 
         // Add custom data to the JWT payload
         // $payload['email'] = $user->getEmail();
-        $payload['name'] = $user->getName();  // Add other custom fields as needed
-
+        $payload['name'] = $user->getName();
+        $payload['gravatarUrl'] = $user->getGravatarUrl(); // Add other custom fields as neededU
+        // dd($payload);
         // Set the modified payload back to the event
         $event->setData($payload);
     }
