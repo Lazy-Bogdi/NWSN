@@ -58,4 +58,6 @@
 /front/*.sln
 /front/*.sw?
 
+#TinyMCE
+/front/public/tinymce/
 ######< FRONTEND ######
