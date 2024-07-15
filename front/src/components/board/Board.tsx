@@ -30,8 +30,14 @@ const Board: React.FC = () => {
         const token = localStorage.getItem('jwt_token');
         if (token) {
             const decoded = decodeToken(token);
-            setUsername(decoded.name);
-            setGravatarUrl(decoded.gravatarUrl);
+            if(decoded != null){
+                setUsername(decoded.name);
+                setGravatarUrl(decoded.gravatarUrl);
+            }else{
+                setUsername("Unknown");
+                setGravatarUrl("Unknown");
+            }
+            
         }
     }, []);
 
