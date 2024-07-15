@@ -1,7 +1,7 @@
 import { jwtDecode } from 'jwt-decode';
 
 interface DecodedToken {
-    username: string;
+    name: string;
     gravatarUrl: string;
 }
 
