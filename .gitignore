@@ -9,6 +9,7 @@
 /back/public/bundles/
 /back/var/
 /back/vendor/
+/back/migrations/
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###
@@ -58,4 +59,6 @@
 /front/*.sln
 /front/*.sw?
 
+#TinyMCE
+/front/public/tinymce/
 ######< FRONTEND ######

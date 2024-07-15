@@ -14,17 +14,21 @@ use League\OAuth2\Client\Exception\HostedDomainException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use App\Service\GravatarService;
 
 class GoogleAuthController extends AbstractController
 {
     private $entityManager;
     private $userRepository;
     private $jwtManager;
-    public function __construct(EntityManagerInterface $entityManager, UserRepository $userRepository, JWTTokenManagerInterface $jwtManager)
+    private $gravatarService;
+
+    public function __construct(EntityManagerInterface $entityManager, UserRepository $userRepository, JWTTokenManagerInterface $jwtManager, GravatarService $gravatarService)
     {
         $this->entityManager = $entityManager;
         $this->userRepository = $userRepository;
         $this->jwtManager = $jwtManager;
+        $this->gravatarService = $gravatarService;
     }
 
     /**
@@ -38,7 +42,7 @@ class GoogleAuthController extends AbstractController
             ->getClient('google') // key used in config/packages/knpu_oauth2_client.yaml
             ->redirect([
                 'openid', 'profile', 'email' // the scopes you want to access
-            ], ['prompt' => 'select_account']);
+            ], ['prompt' => 'consent']);
     }
 
     /**
@@ -57,6 +61,7 @@ class GoogleAuthController extends AbstractController
             // the exact class depends on which provider you're using
             /** @var \League\OAuth2\Client\Provider\GoogleUser $googleUser */
             $googleUser = $client->fetchUser();
+            
 
             $user = $this->userRepository->findOneBy(['googleId' => $googleUser->getId()]);
             // $googlename = $googleUser->getName();
@@ -66,6 +71,8 @@ class GoogleAuthController extends AbstractController
                 $user = (new User())->setGoogleId($googleUser->getId());
                 $user->setEmail($googleUser->getEmail());
                 $user->setName($googleUser->getName());
+                $gravatarUrl = $this->gravatarService->getGravatarUrl($googleUser->getEmail());
+                $user->setGravatarUrl($gravatarUrl);
                 $this->entityManager->persist($user);
                 $this->entityManager->flush();
             }
@@ -74,10 +81,13 @@ class GoogleAuthController extends AbstractController
             $token = $this->jwtManager->create($user);
             // dd($googleUser, $user,$token);
             return new RedirectResponse(sprintf('%s?token=%s', $frontendUrl, $token), Response::HTTP_FOUND);
-        } catch (IdentityProviderException $e) {
-            return new RedirectResponse(sprintf('%s?error=%s', $frontendUrl, urlencode($e->getMessage())), Response::HTTP_SEE_OTHER);
+        } catch (IdentityProviderException $ipe) {
+            return new RedirectResponse(sprintf('%s?error=%s', $frontendUrl, urlencode($ipe->getMessage())), Response::HTTP_SEE_OTHER);
         } catch (HostedDomainException $hde) {
             return new RedirectResponse(sprintf('%s?error=%s', $frontendUrl, urlencode($hde->getMessage())), Response::HTTP_SEE_OTHER);
+        }
+        catch(\Exception $e){
+            return new RedirectResponse(sprintf('%s?error=%s', $frontendUrl, urlencode($e->getMessage())), Response::HTTP_SEE_OTHER);
         }
     }
 }

@@ -1,16 +1,42 @@
-// import { useState } from 'react'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './components/home/Home';
+import Board from './components/board/Board';
+import Login from './components/home/Login';
+import GoogleCallback from './components/GoogleCallback';
+import { ModalProvider, useModal } from './contexts/ModalContext';
+import Modal from './components/auth/Modal';
+import './App.css';
 
-function App() {
-  // const [count, setCount] = useState(0)
-  const handleLogin = () => {
-    window.location.href = 'https://127.0.0.1:8000/connect/google'; // Update with your Symfony app domain
-  };
+
+const AppContent: React.FC = () => {
+  const { isOpen, title, message, closeModal } = useModal();
+
   return (
     <>
-      <button onClick={handleLogin}>Login with Google</button>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/callback" element={<GoogleCallback />} />
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/board"
+          element={
+            <Board />
+          }
+        />
+      </Routes>
+      <Modal isOpen={isOpen} message={message} title={title} closeModal={closeModal} />
     </>
-  )
+  );
+};
+
+function App() {
+  return (
+    <Router>
+      <ModalProvider>
+        <AppContent />
+      </ModalProvider>
+    </Router>
+  );
 }
 
-export default App
+export default App;
