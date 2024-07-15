@@ -56,7 +56,7 @@ class GoogleAuthController extends AbstractController
 
         /** @var \KnpU\OAuth2ClientBundle\Client\Provider\Google $client */
         $client = $clientRegistry->getClient('google');
-        $frontendUrl = 'http://localhost:5173/callback';
+        $frontendUrl = 'http://localhost:5173/NWS-social-network/callback';
         try {
             // the exact class depends on which provider you're using
             /** @var \League\OAuth2\Client\Provider\GoogleUser $googleUser */
