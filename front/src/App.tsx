@@ -31,7 +31,7 @@ const AppContent: React.FC = () => {
 
 function App() {
   return (
-    <Router>
+    <Router basename="/NWS-social-network">
       <ModalProvider>
         <AppContent />
       </ModalProvider>
