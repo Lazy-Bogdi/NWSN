@@ -8,6 +8,8 @@ until nc -z -v -w30 mysql 3306; do
 done
 echo "MySQL is up and running"
 
+# Install dependencies
+composer install --no-interaction --optimize-autoloader
 # Create the database if it doesn't exist
 php bin/console doctrine:database:create --if-not-exists
 
