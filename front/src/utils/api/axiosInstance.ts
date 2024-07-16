@@ -3,7 +3,7 @@ import eventEmitter from '../eventEmitter';
 
 // Create a custom axios instance
 const axiosInstance = axios.create({
-    baseURL: 'http://vps-7cceaa46.vps.ovh.net/NWS-social-network/back', // Replace with your Symfony backend URL
+    baseURL: 'http://localhost/api', // Replace with your Symfony backend URL
 });
 
 // Add a request interceptor to attach the token
