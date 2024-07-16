@@ -3,7 +3,7 @@ import eventEmitter from '../eventEmitter';
 
 // Create a custom axios instance
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost/api', // Replace with your Symfony backend URL
+    baseURL: 'http://localhost:8080/api', // Replace with your Symfony backend URL
 });
 
 // Add a request interceptor to attach the token
