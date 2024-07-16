@@ -2,7 +2,7 @@ import React from 'react';
 
 const Login: React.FC = () => {
     const handleLogin = () => {
-        window.location.href = 'http://vps-7cceaa46.vps.ovh.net/NWS-social-network/connect/google'; // Update with your Symfony app domain
+        window.location.href = 'http://vps-7cceaa46.vps.ovh.net/NWS-social-network/back/connect/google'; // Update with your Symfony app domain
         // http://vps-7cceaa46.vps.ovh.net/NWS-social-network/
     };
 
