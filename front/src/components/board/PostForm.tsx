@@ -18,7 +18,7 @@ const PostForm: React.FC<PostFormProps> = ({ onPostCreated }) => {
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         try {
-            const response = await axiosInstance.post('/api/post/posts', JSON.stringify({ content }));
+            const response = await axiosInstance.post('/post/posts', JSON.stringify({ content }));
             if (response.status === 201) {
                 onPostCreated(response.data); // Call the callback function to update the state
                 setContent(''); // Clear the editor content
