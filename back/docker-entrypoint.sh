@@ -17,5 +17,8 @@ php bin/console doctrine:database:create --if-not-exists
 php bin/console doctrine:migrations:diff --no-interaction
 php bin/console doctrine:migrations:migrate --no-interaction
 
+# Jwt tokens
+php bin/console lexik:jwt:generate-keypair --skip-if-exists
+
 # Start PHP-FPM
 php-fpm
