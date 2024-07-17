@@ -19,7 +19,7 @@ const Board: React.FC = () => {
     const [gravatarUrl, setGravatarUrl] = useState<string>('');
 
     useEffect(() => {
-        axiosInstance.get('/api/post/posts')
+        axiosInstance.get('/post/posts')
             .then(response => {
                 setPosts(response.data);
             })
