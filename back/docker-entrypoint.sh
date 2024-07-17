@@ -14,8 +14,8 @@ composer install --no-interaction --optimize-autoloader
 php bin/console doctrine:database:create --if-not-exists
 
 # Run migrations
-# php bin/console doctrine:migrations:diff --no-interaction
-php bin/console doctrine:migrations:migrate --no-interaction
+# php bin/console doctrine:migrations:diff --no-interaction --allow-empty-diff
+# php bin/console doctrine:migrations:migrate --no-interaction 
 
 # Jwt tokens
 php bin/console lexik:jwt:generate-keypair --skip-if-exists
